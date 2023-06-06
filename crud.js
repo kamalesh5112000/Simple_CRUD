@@ -28,24 +28,27 @@ function submitForm(e){
     
 
 }
-window.addEventListener("DOMContentLoaded",()=>{
-    axios.get('https://crudcrud.com/api/705a8d7c6ae74cd196206fe1c9f0a409/appoinmentData')
-    .then((res)=>{
-        console.log(res)
-        for(var i=0;i<res.data.length;i++){
-            showData(res.data[i])
-        }
-    }).catch(err=>console.log(err))
-    // const localstorageObj = localStorage;
-    // const localstoragekeys = Object.keys(localstorageObj)
-    // console.log(localstoragekeys)
-    // for(var i=0;i<localstoragekeys.length;i++){
-    //     const key =localstoragekeys[i]
-    //     const userdetails=localstorageObj[key]
-    //     const userparse=JSON.parse(userdetails);
-    //     showData(userparse)
-    // }
-})
+function display(){
+   
+        axios.get('https://crudcrud.com/api/705a8d7c6ae74cd196206fe1c9f0a409/appoinmentData')
+        .then((res)=>{
+            console.log(res)
+            for(var i=0;i<res.data.length;i++){
+                showData(res.data[i])
+            }
+        }).catch(err=>console.log(err))
+        // const localstorageObj = localStorage;
+        // const localstoragekeys = Object.keys(localstorageObj)
+        // console.log(localstoragekeys)
+        // for(var i=0;i<localstoragekeys.length;i++){
+        //     const key =localstoragekeys[i]
+        //     const userdetails=localstorageObj[key]
+        //     const userparse=JSON.parse(userdetails);
+        //     showData(userparse)
+        // }
+    
+}
+display()
 function showData(obj){
     var li=document.createElement('li');
     li.className='list-group-item';
@@ -81,7 +84,24 @@ function delitem(e){
             var deletitem=li.childNodes[3].textContent;
             newitem.removeChild(li)
             console.log(deletitem)
-            localStorage.removeItem(deletitem)
+            axios.get('https://crudcrud.com/api/705a8d7c6ae74cd196206fe1c9f0a409/appoinmentData')
+            .then((res)=>{
+                console.log(res)
+                for(var i=0;i<res.data.length;i++){
+                    showData(res.data[i])
+                    if (deletitem===res.data[i].email){
+                        const id=res.data[i]._id;
+                        console.log(id)
+                        axios.delete(`https://crudcrud.com/api/705a8d7c6ae74cd196206fe1c9f0a409/appoinmentData/${id}`)
+                        .then(()=>{
+                            newitem.innerHTML='';
+                            display();
+                        }).catch(err=>console.log(err))
+
+
+                    }
+                }
+            }).catch(err=>console.log(err))
 
             
         }
