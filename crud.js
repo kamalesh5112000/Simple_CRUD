@@ -15,12 +15,56 @@ function submitForm(e){
         email: email.value,
         phone:phone.value
     }
+    let flag=false;
+    axios.get('https://crudcrud.com/api/8e613f96ab96416da34d6fddfa16489d/appoinmentData')
+            .then((res)=>{
+                console.log(res)
+                if(res.data.length>0){
+                    for(var i=0;i<res.data.length;i++){
+                        if (email.value===res.data[i].email){
+                            const id=res.data[i]._id;
+                            console.log(id)
+                            axios.put(`https://crudcrud.com/api/8e613f96ab96416da34d6fddfa16489d/appoinmentData/${id}`,myobj)
+                            .then(()=>{
+                                newitem.innerHTML='';
+                                display();
+                            }).catch(err=>console.log(err))
+                            flag=true;
+                            break;
+    
+                        }
+                    }
+                    if (flag==false){
+                        axios.post('https://crudcrud.com/api/8e613f96ab96416da34d6fddfa16489d/appoinmentData',
+                    myobj).then(res=>{
+                        newitem.innerHTML='';
+                        display();
+                    }).catch(err =>console.log(err));
+                    }
 
-    axios.post('https://crudcrud.com/api/705a8d7c6ae74cd196206fe1c9f0a409/appoinmentData',
-    myobj).then(res=>{
-        showData(res.data)
-        console.log(res)
-    }).catch(err =>console.log(err));
+                }else{
+                    axios.post('https://crudcrud.com/api/8e613f96ab96416da34d6fddfa16489d/appoinmentData',
+                    myobj).then(res=>{
+                        newitem.innerHTML='';
+                        display();
+                    }).catch(err =>console.log(err));
+
+                }
+                
+            }).catch(err=>console.log(err))
+
+
+
+
+
+
+
+
+
+
+    
+
+    
 
     let myobj_serial=JSON.stringify(myobj);
     localStorage.setItem(email.value,myobj_serial);
@@ -30,7 +74,7 @@ function submitForm(e){
 }
 function display(){
    
-        axios.get('https://crudcrud.com/api/705a8d7c6ae74cd196206fe1c9f0a409/appoinmentData')
+        axios.get('https://crudcrud.com/api/8e613f96ab96416da34d6fddfa16489d/appoinmentData')
         .then((res)=>{
             console.log(res)
             for(var i=0;i<res.data.length;i++){
@@ -84,15 +128,14 @@ function delitem(e){
             var deletitem=li.childNodes[3].textContent;
             newitem.removeChild(li)
             console.log(deletitem)
-            axios.get('https://crudcrud.com/api/705a8d7c6ae74cd196206fe1c9f0a409/appoinmentData')
+            axios.get('https://crudcrud.com/api/8e613f96ab96416da34d6fddfa16489d/appoinmentData')
             .then((res)=>{
                 console.log(res)
                 for(var i=0;i<res.data.length;i++){
-                    showData(res.data[i])
                     if (deletitem===res.data[i].email){
                         const id=res.data[i]._id;
                         console.log(id)
-                        axios.delete(`https://crudcrud.com/api/705a8d7c6ae74cd196206fe1c9f0a409/appoinmentData/${id}`)
+                        axios.delete(`https://crudcrud.com/api/8e613f96ab96416da34d6fddfa16489d/appoinmentData/${id}`)
                         .then(()=>{
                             newitem.innerHTML='';
                             display();
