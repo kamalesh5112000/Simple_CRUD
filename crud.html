@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+    <title>Local Storage</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row-6">
+            <div class="col-md-12">
+                <br>
+                <br>
+                <form id="addForm" class="form-inline mb-3">
+                    <label>Name:</label>
+                    <input type="text" class="form-control mr-2" id="name">
+                    <label>Email:</label>
+                    <input type="text" class="form-control mr-2" id="email">
+                    <label>Phone:</label>
+                    <input type="text" class="form-control mr-2" id="phone">
+                    <input type="submit" class="btn btn-dark" value="Submit">
+                </form>
+            </div>
+        </div>
+         <div class="item">
+            <ul id="items" class="list-group">
+        
+            </ul>
+         </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script src="crud.js"></script>
+</body>
+</html>
